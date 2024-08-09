@@ -1,0 +1,17 @@
+{
+    "name": "YouTube Playback Speed Controller",
+    "manifest_version": 3,
+    "version": "0.1.0",
+    "description": "A Minimal YouTube video playback speed controller",
+    "permissions": ["activeTab"],
+    "content_scripts": [
+        {
+            "matches": ["*://www.youtube.com/*"],
+            "js": ["./script/content.js"],
+            "css": ["./css/content.css"]
+        }
+    ],
+    "icons": {
+        "48": "./images/icon-dark.png"
+    }
+}
