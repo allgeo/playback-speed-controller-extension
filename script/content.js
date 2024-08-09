@@ -7,11 +7,14 @@
     <button id="speed-increase">>></button>
   `;
 
+    let currentVideoId = "";
+
     function injectSpeedController() {
         const youtubePlayer = document.querySelector(".html5-video-player");
         if (youtubePlayer) {
             youtubePlayer.appendChild(speedController);
             addEventListeners();
+            checkForVideoChange();
         } else {
             setTimeout(injectSpeedController, 1000);
         }
@@ -59,6 +62,28 @@
         const speedDisplay = document.getElementById("speed-display");
         const video = document.querySelector("video");
         speedDisplay.textContent = `${video.playbackRate.toFixed(2)}x`;
+    }
+
+    function resetSpeed() {
+        const video = document.querySelector("video");
+        if (video) {
+            video.playbackRate = 1;
+            updateSpeedDisplay();
+        }
+    }
+
+    function getVideoId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("v");
+    }
+
+    function checkForVideoChange() {
+        const newVideoId = getVideoId();
+        if (newVideoId !== currentVideoId) {
+            currentVideoId = newVideoId;
+            resetSpeed();
+        }
+        setTimeout(checkForVideoChange, 1000); // Check every second
     }
 
     injectSpeedController();
